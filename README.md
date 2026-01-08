@@ -7,7 +7,8 @@ Proyek ini dirancang untuk memenuhi tugas besar mata kuliah Pengembangan Aplikas
 2. Fitur Manajemen Menu
 3. Fitur Pemesanan Menu
 4. Fitur Pengiriman Menu
-5. Fitur Feedback Pemesanan
+5. Fitur Manajemen Jasa Kirim
+6. Fitur Tracking Pengiriman
 
 ### Installation
 
@@ -102,7 +103,7 @@ Jika lebih suka menggunakan Laragon, gunakan langkah-langkah berikut:
 7. Setup your database configuration in `.env` sesuai konfigurasi Laragon
 8. Run database migrations
    ```sh
-   php artisan migrate
+   php artisan migrate:fresh
    ```
 9. Generate application encryption key (jika belum)
    ```sh
@@ -133,8 +134,8 @@ Jika lebih suka menggunakan Laragon, gunakan langkah-langkah berikut:
 
 Untuk menggunakan fitur CRUD pada proyek ini, anda harus login dengan 2 jenis akun yang tersedia pada `database/seeders/UserSeeder.php`.
 
-1. Login sebagai Admin, untuk mengakses semua fitur (kecuali Tambah Order).
-2. Login sebagai Customer untuk mengakses fitur Tambah Order
+1. Login menggunakan email `admin@gmail.com`
+2. Isi password `12345678`
 
 ---
 
@@ -172,8 +173,7 @@ docker-compose up -d
 
 ## 📚 Documentation
 
+- [GraphQL Detail Schema](GRAPHQL_SCHEMA_DOCUMENTATION.md) - Detail skema GraphQL
 - [GraphQL Testing Guide](GRAPHQL_TESTING_GUIDE.md) - Cara menggunakan GraphQL Playground
-- [Docker Setup Guide](DOCKER_SETUP_GUIDE.md) - Detail setup Docker
-- [Architecture Documentation](ARCHITECTURE.md) - Struktur aplikasi
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
