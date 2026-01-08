@@ -132,10 +132,11 @@ Jika lebih suka menggunakan Laragon, gunakan langkah-langkah berikut:
 
 ### Cara Penggunaan
 
-Untuk menggunakan fitur CRUD pada proyek ini, anda harus login dengan 2 jenis akun yang tersedia pada `database/seeders/UserSeeder.php`.
+Untuk menggunakan fitur CRUD pada proyek ini, anda harus login dengan akun Admin yang tersedia pada `database/seeders/UserSeeder.php`.
 
 1. Login menggunakan email `admin@gmail.com`
 2. Isi password `12345678`
+3. jalankan CRUD dari masing-masing fitur secara berurutan: `Menu > Order > Delivery > Tracking`
 
 ---
 
