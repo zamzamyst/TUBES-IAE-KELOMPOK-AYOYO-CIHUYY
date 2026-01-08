@@ -1,0 +1,265 @@
+# GraphQL Schema for PAW-KELOMPOK7-SI4710
+# Maps to existing Laravel models and controllers
+
+"""
+User type representing an authenticated user in the system
+"""
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  email_verified_at: String
+  created_at: String
+  updated_at: String
+}
+
+"""
+Menu type representing a food/item menu
+"""
+type Menu {
+  id: ID!
+  menu_code: String!
+  name: String!
+  price: Float!
+  description: String!
+  created_at: String
+  updated_at: String
+}
+
+"""
+Order type representing a customer order
+"""
+type Order {
+  id: ID!
+  menu_code: String!
+  name: String!
+  price: Float!
+  created_at: String
+  updated_at: String
+  quantity: Int!
+  notes: String
+  delivery: Delivery
+  feedback: Feedback
+}
+
+"""
+DeliveryService type representing available delivery service providers
+"""
+type DeliveryService {
+  id: ID!
+  name: String!
+  price: Float!
+  created_at: String
+  updated_at: String
+  estimation_days: Int!
+  is_active: Boolean!
+}
+
+"""
+Delivery type representing order delivery information
+"""
+type Delivery {
+  id: ID!
+  order_id: Int!
+  delivery_service_id: Int!
+  created_at: String
+  updated_at: String
+  delivery_address: String!
+  delivery_status: DeliveryStatus!
+  order: Order!
+  deliveryService: DeliveryService!
+  tracking: Tracking
+}
+
+"""
+Tracking type representing real-time delivery tracking coordinates
+"""
+type Tracking {
+  id: ID!
+  delivery_id: Int!
+  created_at: String
+  updated_at: String
+  latitude: Float!
+  longitude: Float!
+  delivery: Delivery!
+}
+
+"""
+Feedback type representing customer feedback for orders
+"""
+type Feedback {
+  id: ID!
+  created_at: String
+  updated_at: String
+  order_id: Int!
+  user_id: Int
+  rating: Int
+  comment: String
+  order: Order!
+  user: User
+}
+
+"""
+Delivery status enumeration
+"""
+enum DeliveryStatus {
+  pending
+  in_transit
+  delivered
+  cancelled
+}
+
+"""
+Root Query type for fetching data
+"""
+type Query {
+  # User Queries
+  user(id: ID! @eq): User @find(model: "User")
+  users: [User!]! @all(model: "User")
+  
+  # Menu Queries
+  menu(id: ID! @eq): Menu @find(model: "Menu")
+  menus: [Menu!]! @all(model: "Menu")
+  menuByCode(code: String! @eq): Menu @find(model: "Menu")
+  
+  # Order Queries
+  order(id: ID! @eq): Order @find(model: "Order")
+  orders: [Order!]! @all(model: "Order")
+  ordersByUser(user_id: ID! @eq): [Order!]! @all(model: "Order")
+  
+  # Delivery Queries
+  delivery(id: ID! @eq): Delivery @find(model: "Delivery")
+  deliveries: [Delivery!]! @all(model: "Delivery")
+  deliveriesByStatus(status: DeliveryStatus! @eq): [Delivery!]! @all(model: "Delivery")
+  deliveriesByOrder(order_id: ID! @eq): [Delivery!]! @all(model: "Delivery")
+  
+  # Tracking Queries
+  tracking(id: ID! @eq): Tracking @find(model: "Tracking")
+  trackings: [Tracking!]! @all(model: "Tracking")
+  trackingByDelivery(delivery_id: ID! @eq): Tracking @find(model: "Tracking")
+  
+  # Feedback Queries
+  feedback(id: ID! @eq): Feedback @find(model: "Feedback")
+  feedbacks: [Feedback!]! @all(model: "Feedback")
+  feedbackByOrder(order_id: ID! @eq): Feedback @find(model: "Feedback")
+  feedbacksByRating(rating: Int! @eq): [Feedback!]! @all(model: "Feedback")
+  
+  # Delivery Service Queries
+  deliveryService(id: ID! @eq): DeliveryService @find(model: "DeliveryService")
+  deliveryServices: [DeliveryService!]! @all(model: "DeliveryService")
+  activeDeliveryServices(is_active: Boolean! @eq): [DeliveryService!]! @all(model: "DeliveryService")
+}
+
+"""
+Root Mutation type for modifying data
+"""
+type Mutation {
+  # Menu Mutations
+  createMenu(
+    menu_code: String!
+    name: String!
+    price: Float!
+    description: String!
+  ): Menu! @field(resolver: "App\\GraphQL\\Mutations\\CreateMenu")
+  
+  updateMenu(
+    id: ID!
+    menu_code: String
+    name: String
+    price: Float
+    description: String
+  ): Menu! @field(resolver: "App\\GraphQL\\Mutations\\UpdateMenu")
+  
+  deleteMenu(id: ID! @eq): Boolean! @field(resolver: "App\\GraphQL\\Mutations\\DeleteMenu")
+  
+  # Order Mutations
+  createOrder(
+    menu_code: String!
+    name: String!
+    price: Float!
+    quantity: Int!
+    notes: String
+  ): Order! @create(model: "Order")
+  
+  updateOrder(
+    id: ID!
+    name: String
+    price: Float
+    quantity: Int
+    notes: String
+  ): Order! @update(model: "Order")
+  
+  deleteOrder(id: ID! @eq): Boolean! @delete(model: "Order")
+  
+  # Delivery Mutations
+  createDelivery(
+    order_id: Int!
+    delivery_service_id: Int!
+    delivery_address: String!
+    delivery_status: DeliveryStatus!
+  ): Delivery! @create(model: "Delivery")
+  
+  updateDelivery(
+    id: ID!
+    delivery_service_id: Int
+    delivery_address: String
+    delivery_status: DeliveryStatus
+  ): Delivery! @update(model: "Delivery")
+  
+  deleteDelivery(id: ID! @eq): Boolean! @delete(model: "Delivery")
+  
+  # Tracking Mutations
+  createTracking(
+    delivery_id: Int!
+    latitude: Float!
+    longitude: Float!
+  ): Tracking! @create(model: "Tracking")
+  
+  updateTracking(
+    id: ID!
+    latitude: Float!
+    longitude: Float!
+  ): Tracking! @update(model: "Tracking")
+  
+  updateTrackingByDelivery(
+    delivery_id: Int!
+    latitude: Float!
+    longitude: Float!
+  ): Tracking! @create(model: "Tracking")
+  
+  deleteTracking(id: ID! @eq): Boolean! @delete(model: "Tracking")
+  
+  # Feedback Mutations
+  createFeedback(
+    order_id: Int!
+    user_id: Int
+    rating: Int
+    comment: String
+  ): Feedback! @create(model: "Feedback")
+  
+  updateFeedback(
+    id: ID!
+    rating: Int
+    comment: String
+  ): Feedback! @update(model: "Feedback")
+  
+  deleteFeedback(id: ID! @eq): Boolean! @delete(model: "Feedback")
+  
+  # Delivery Service Mutations
+  createDeliveryService(
+    name: String!
+    price: Float!
+    estimation_days: Int!
+    is_active: Boolean!
+  ): DeliveryService! @create(model: "DeliveryService")
+  
+  updateDeliveryService(
+    id: ID!
+    name: String
+    price: Float
+    estimation_days: Int
+    is_active: Boolean
+  ): DeliveryService! @update(model: "DeliveryService")
+  
+  deleteDeliveryService(id: ID! @eq): Boolean! @delete(model: "DeliveryService")
+}

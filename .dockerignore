@@ -1,0 +1,24 @@
+# Docker Ignore file
+# Exclude files that don't need to be in the Docker image
+
+.git
+.gitignore
+.dockerignore
+.env.example
+.env.docker
+node_modules
+vendor
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+bootstrap/cache/*
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+.env.*.local
+docker-compose.override.yml
+README.md
+LICENSE
