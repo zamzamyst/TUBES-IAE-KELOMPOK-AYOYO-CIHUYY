@@ -285,12 +285,45 @@ mutation {
 
 #### Read Tracking (Query)
 ```graphql
-{
-  tracking(id: 1) {
-    id
+query {
+  trackings {
+    id                     
     delivery_id
     latitude
     longitude
+    delivery {
+      id                   
+      deliveryService {
+        id                 
+        name               
+      }
+      order {
+        id                 
+        name              
+      }
+    }
+  }
+}
+```
+#### Read Tracking by ID (Query)
+```graphql
+query {
+  tracking(id: 1) {
+    id                     
+    delivery_id
+    latitude
+    longitude
+    delivery {
+      id                   
+      deliveryService {
+        id                 
+        name               
+      }
+      order {
+        id                 
+        name              
+      }
+    }
   }
 }
 ```
@@ -321,65 +354,6 @@ mutation {
 
 ---
 
-### FEEDBACK CRUD Operations
-
-#### Create Feedback
-```graphql
-mutation {
-  createFeedback(
-    order_id: 1
-    user_id: 1
-    rating: 5
-    comment: "Excellent service and delicious food!"
-  ) {
-    id
-    order_id
-    user_id
-    rating
-    comment
-    created_at
-  }
-}
-```
-
-#### Read Feedback (Query)
-```graphql
-{
-  feedback(id: 1) {
-    id
-    order_id
-    rating
-    comment
-  }
-}
-```
-
-#### Update Feedback
-```graphql
-mutation {
-  updateFeedback(
-    id: 1
-    rating: 4
-    comment: "Great food but delivery was a bit late"
-  ) {
-    id
-    order_id
-    rating
-    comment
-    updated_at
-  }
-}
-```
-
-#### Delete Feedback
-```graphql
-mutation {
-  deleteFeedback(id: 1)
-}
-```
-
----
-
 ### DELIVERY SERVICE CRUD Operations
 
 #### Create Delivery Service
@@ -403,13 +377,29 @@ mutation {
 
 #### Read Delivery Service (Query)
 ```graphql
-{
+query {
+  deliveryServices {
+    id
+    name
+    price
+    estimation_days
+    is_active
+    created_at
+    updated_at
+  }
+}
+```
+#### Read Delivery Service by ID (Query)
+```graphql
+query {
   deliveryService(id: 1) {
     id
     name
     price
     estimation_days
     is_active
+    created_at
+    updated_at
   }
 }
 ```
