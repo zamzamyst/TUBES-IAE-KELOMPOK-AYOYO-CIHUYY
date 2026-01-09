@@ -229,22 +229,6 @@ type Mutation {
   
   deleteTracking(id: ID! @eq): Boolean! @delete(model: "Tracking")
   
-  # Feedback Mutations
-  createFeedback(
-    order_id: Int!
-    user_id: Int
-    rating: Int
-    comment: String
-  ): Feedback! @create(model: "Feedback")
-  
-  updateFeedback(
-    id: ID!
-    rating: Int
-    comment: String
-  ): Feedback! @update(model: "Feedback")
-  
-  deleteFeedback(id: ID! @eq): Boolean! @delete(model: "Feedback")
-  
   # Delivery Service Mutations
   createDeliveryService(
     name: String!

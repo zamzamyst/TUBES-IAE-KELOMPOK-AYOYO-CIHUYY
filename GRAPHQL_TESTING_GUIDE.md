@@ -493,10 +493,6 @@ From your schema, you have access to:
 - `tracking(id)` - Get single tracking
 - `trackings` - Get all trackings
 - `trackingByDelivery(delivery_id)` - Get tracking for delivery
-- `feedback(id)` - Get single feedback
-- `feedbacks` - Get all feedbacks
-- `feedbackByOrder(order_id)` - Get feedback by order
-- `feedbacksByRating(rating)` - Get feedbacks by rating
 - `deliveryService(id)` - Get single delivery service
 - `deliveryServices` - Get all delivery services
 - `activeDeliveryServices(is_active)` - Get active delivery services
@@ -506,7 +502,6 @@ From your schema, you have access to:
 - **Order:** createOrder, updateOrder, deleteOrder
 - **Delivery:** createDelivery, updateDelivery, deleteDelivery
 - **Tracking:** createTracking, updateTracking, updateTrackingByDelivery, deleteTracking
-- **Feedback:** createFeedback, updateFeedback, deleteFeedback
 - **DeliveryService:** createDeliveryService, updateDeliveryService, deleteDeliveryService
 
 ---

@@ -81,18 +81,6 @@ Represents real-time delivery tracking information.
 - `longitude: Float!` - Current longitude coordinate
 - `delivery: Delivery!` - Related delivery
 
-### Feedback
-Represents customer feedback for an order.
-
-**Fields:**
-- `id: ID!` - Unique feedback identifier
-- `order_id: Int!` - Associated order ID
-- `user_id: Int` - User who gave feedback
-- `rating: Int` - Rating (typically 1-5)
-- `comment: String` - Feedback comment
-- `order: Order!` - Related order
-- `user: User` - User who gave feedback
-
 ### DeliveryStatus
 Enumeration for delivery status.
 
@@ -133,12 +121,6 @@ The Query type provides read-only access to data.
 - `trackings` - Get all tracking records
 - `trackingByDelivery(delivery_id: ID!)` - Get tracking for a delivery
 
-### Feedback Queries
-- `feedback(id: ID!)` - Get a single feedback by ID
-- `feedbacks` - Get all feedbacks
-- `feedbackByOrder(order_id: ID!)` - Get feedback for an order
-- `feedbacksByRating(rating: Int!)` - Get feedbacks filtered by rating
-
 ### Delivery Service Queries
 - `deliveryService(id: ID!)` - Get a single delivery service by ID
 - `deliveryServices` - Get all delivery services
@@ -171,9 +153,6 @@ The Mutation type provides write operations (create, update, delete).
 - `updateTrackingByDelivery(delivery_id, latitude, longitude)` - Update tracking by delivery ID
 - `deleteTracking(id)` - Delete tracking record
 
-### Feedback Mutations
-- `updateFeedback(id, rating, comment)` - Update customer feedback
-
 ### Delivery Service Mutations
 - `createDeliveryService(name, price, estimation_days, is_active)` - Create delivery service
 - `updateDeliveryService(id, name, price, estimation_days, is_active)` - Update service
@@ -181,70 +160,15 @@ The Mutation type provides write operations (create, update, delete).
 
 ---
 
-## Usage Examples
+For usage examples, please read the `GraphQL Testing Guide`
+___
 
-### Get All Menus with Full Details
-```graphql
-{
-  menus {
-    id
-    menu_code
-    name
-    price
-    description
-  }
-}
-```
+## 📚 Documentation
 
-### Get Order with Related Data
-```graphql
-{
-  order(id: 1) {
-    id
-    menu_code
-    name
-    quantity
-    delivery {
-      delivery_address
-      delivery_status
-    }
-    feedback {
-      rating
-      comment
-    }
-  }
-}
-```
+- [GraphQL Detail Schema](GRAPHQL_SCHEMA_DOCUMENTATION.md) - Detail skema GraphQL
+- [GraphQL Testing Guide](GRAPHQL_TESTING_GUIDE.md) - Cara menggunakan GraphQL Playground
 
-### Create New Menu
-```graphql
-mutation {
-  createMenu(
-    menu_code: "NASI001"
-    name: "Nasi Goreng Spesial"
-    price: 35000
-    description: "Special fried rice with premium ingredients"
-  ) {
-    id
-    menu_code
-    name
-  }
-}
-```
-
-### Update Order Status via Tracking
-```graphql
-mutation {
-  updateTrackingByDelivery(
-    delivery_id: 5
-    latitude: -6.1751
-    longitude: 106.8650
-  ) {
-    id
-    delivery_id
-  }
-}
-```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
